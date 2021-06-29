@@ -7,7 +7,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-  res.send(
+  res.send([
     {
       productId: "1",
       price: 100,
@@ -15,12 +15,8 @@ app.get("/products", (req, res) => {
     {
       productId: "2",
       price: 150,
-    }
-  );
-});
-
-app.get("/products", (req, res) => {
-  res.send("The server is running as expected 🤪");
+    },
+  ]);
 });
 
 app.listen(PORT, () => {
