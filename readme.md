@@ -97,3 +97,4 @@ PS: To run in the browser I need to change HTTPS to HTTP
 ## To install node in a EC2 instance:
 
 https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+https://sumantmishra.medium.com/how-to-deploy-node-js-app-on-aws-with-github-db99758294f1

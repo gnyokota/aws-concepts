@@ -19,6 +19,10 @@ app.get("/products", (req, res) => {
   );
 });
 
+app.get("/products", (req, res) => {
+  res.send("The server is running as expected 🤪");
+});
+
 app.listen(PORT, () => {
   console.log(`The server is running on port ${PORT}`);
 });
