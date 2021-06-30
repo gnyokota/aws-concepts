@@ -68,6 +68,8 @@ Before lauching the EC2 instance we need to define the Amazon Machine Image(AMI)
 
 <img src="images/img13.png" width="70%" alt="Create a key pair">
 
+### Connecting to an Amazon EC2 instance:
+
 When I connect to my instance I need to change the permission of the KP (key pair):
 chmod 400 keyPairName.pem
 
@@ -88,14 +90,29 @@ curl "IPv4 address here"
 
 I also need to allow the access to HTTP adding another rule to the security group:
 <img src="images/img14.png" width="70%" alt="Add inbound rule">
-curl localhost:80
+curl localhost:PORTnumber
 
 PS: To run in the browser I need to change HTTPS to HTTP
 
 <!-- Using access keys with EC2 -->
 
-## To install node in a EC2 instance:
+## Install node.js in a EC2 instance and deploy a simple server in it:
 
 https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
 https://sumantmishra.medium.com/how-to-deploy-node-js-app-on-aws-with-github-db99758294f1
 PS: the port from my serve should be the same port exposed in the security group
+
+## Deploy a simple static page using S3:
+
+1. Create a cloudFront
+
+   <img src="images/img15.png" width="70%" alt="Create a cloudFront">
+
+2. Go to S3 on AWS website and choose cloudforbegginersnetbucket
+3. Permissions: turn off the block all public access
+   Go to access control list -> public access -> list objects
+4. Add files, select them and make them public (in the exemple he added a index.html, error.html, img.jpeg)
+5. Properties -> static website hosting -> use this bucket to host a website -> index document: index.html
+   error document: error.html -> check if the link is working
+6. Go to cloudFront distribution on AWS website -> select Web option -> origin domain: choose the s3 bucket name -> Restrict bucket access: yes -> origin access indentity: Create a new identity (cloudFront will be able to change de policies) -> grant read permission on Bucket: yes -> create it
+7. Copy the domain name: domainurl/index.html
