@@ -2,6 +2,15 @@
   "name": "ec2-server",
   "version": "0.0.1",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "4.17.1"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "test ec2 deployment",
+  "main": "server.js",
+  "repository": "aws-concepts",
+  "author": "Giovana",
+  "license": "MIT"
 }

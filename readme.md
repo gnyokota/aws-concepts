@@ -102,6 +102,8 @@ https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-nod
 https://sumantmishra.medium.com/how-to-deploy-node-js-app-on-aws-with-github-db99758294f1
 PS: the port from my serve should be the same port exposed in the security group
 
+https://www.youtube.com/watch?v=LBbq3CgCux8&ab_channel=BackSpaceAcademy
+
 ## Deploy a simple static page using S3:
 
 1. Create a cloudFront
@@ -116,3 +118,31 @@ PS: the port from my serve should be the same port exposed in the security group
    error document: error.html -> check if the link is working
 6. Go to cloudFront distribution on AWS website -> select Web option -> origin domain: choose the s3 bucket name -> Restrict bucket access: yes -> origin access indentity: Create a new identity (cloudFront will be able to change de policies) -> grant read permission on Bucket: yes -> create it
 7. Copy the domain name: domainurl/index.html
+
+## AWS CLI commands:
+
+- This command will add the security credentials: aws configure
+it will also ask for the aws region and the data format.
+I can also define custom profiles and use them use the flag --profile nameOfProfile
+
+  <img src="images/img16.png" width="70%" alt="Define custom profiles">
+
+- To add the credentials as environment variables instead of saving the credentials in a file:
+
+  export AWS_ACCESS_KEY_ID = value
+  export AWS_SECRET_ACCESS_KEY = value
+  export AWS_DEFAULT_REGION = eu-central-1 (this is Frankfurt)
+
+  to check the variables: printenv | grep AWS
+
+- After lauching a EC2 instance I need a keypair:
+
+  aws ec2 create-key-pair --key-name NameKeyPair --query 'KeyMaterial' --output text > NamePair.pem
+
+  Set the permission for the keypair: chmod 400 NameKeyPair.pem
+
+  Display a keypair: aws ec2 describe-key-pairs
+
+  Delete a keypair: aws ec2 delete-key-pair --key-name NameKeyPair
+
+<!-- 32:09 -->
