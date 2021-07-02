@@ -145,4 +145,43 @@ I can also define custom profiles and use them use the flag --profile nameOfProf
 
   Delete a keypair: aws ec2 delete-key-pair --key-name NameKeyPair
 
-<!-- 32:09 -->
+- To connect to a EC2 instance:
+
+  connect to the instance:ssh -i my_ec2_private_key.pem ec2-user@EC2_DNS_NAME
+
+  install the instance packages: sudo yum install ec2-instance-connect
+
+  verify that instance connect was successfully installed: sudo less /etc/ssh/sshd_config
+
+  to see all instances running: aws ec2 describe-instances
+
+  to create tags in the EC2 instance: aws ec2 create-tags --resource INSTANCE_ID --tags Key=aws_demo, value=demo
+
+  delete EC2 instance: aws ec2 terminate-instances --instance-ids EC2_INSTANCE_ID
+
+  delete key pairs: aws ec2 delete-key-pair --key-name NAME_KEYPAIR
+
+- S3 bucket:
+
+  list the buckets: aws s3 ls
+
+  create a s3 bucket: aws s3 mb s3://BUCKET_NAME
+
+  copy files to my s3 bucket: aws s3 cp FILE_PATH s3://BUCKET_NAME
+  copy files to my s3 bucket in a specific folder: aws s3 cp FILE_PATH s3://BUCKET_NAME/FOLDER_NAME
+
+  check the files inside my bucket: aws s3 ls s3://BUCKET_NAME
+
+  sync a local folder to your s3 bucket: aws s3 sync SOURCE_PATH s3://BUCKET_NAME/FOLDER_NAME
+
+  sync and delete a file: aws s3 sync SOURCE_PATH s3://BUCKET_NAME/FOLDER_NAME --delete
+
+  sync in the opposit direction: aws s3 sync s3://BUCKET_NAME/FOLDER_NAME SOURCE_PATH
+
+  remove a file from s3 bucket: aws s3 rm s3://BUCKET_NAME/FOLDER_NAME SOURCE_PATH/FILE_NAME
+
+  move files between folders or between aws and local machine: aws s3 mv s3://BUCKET_NAME/FOLDER_NAME FILE_PATH
+
+  move the opposit direction: aws s3 mv FILE_PATH s3://BUCKET_NAME/FOLDER_NAME
+
+  delete s3 bucket (even if is not empty): aws s3 rb s3://BUCKET_NAME --force
