@@ -104,6 +104,67 @@ PS: the port from my serve should be the same port exposed in the security group
 
 https://www.youtube.com/watch?v=LBbq3CgCux8&ab_channel=BackSpaceAcademy
 
+## Scaling with EC2 autoscaling:
+
+<img src="images/img17.png" width="70%" alt="Autoscaling diagram">
+
+1. Create a launch configuration for autoscaling:
+
+Go to the auto scaling -> launch configuration
+
+<img src="images/img18.png" width="70%" alt="Autoscaling launch">
+
+Create lauching configuration -> give it a name -> chose the machine image type (using the id) and the free tier t2.micro
+<img src="images/img19.png" width="70%" alt="Create launch configuration">
+
+Select the monitoring, but maybe we will need to pay for it, because it is a detailed monitoring.
+In the advanced information fill the user data with the initial script running in the root user. For example:
+#!/bin/bash
+<img src="images/img20.png" width="70%" alt="Script to launch ec2 instance">
+
+or run just run a simple nodejs server. The stress-ng is used to bombard the server.
+The storage type is the default. We create a new security group:
+
+SSH=22 from aywhere
+CUSTOM TCU HTTP=80 from aywhere - it is important the security group to listen to the same port from the load balancer.
+
+Create a new key pair
+
+2. Create an autoscaling group:
+
+In the lauch configuration we select switch to lauch template -> next
+<img src="images/img21.png" width="70%" alt="Autoscaling group">
+
+Choose the default VPC and two different availability zones -> next
+<img src="images/img22.png" width="70%" alt="Autoscaling group network">
+
+Attach to a new load balance -> application load balancer -> internet-facing -> next
+<img src="images/img23.png" width="70%" alt="Load balancer configuration">
+
+Listener and target group -> health check: EC2 and 100 seconds -> next
+<img src="images/img24.png" width="70%" alt="Listener and target group">
+
+Desired capacity: 1
+Minimun capacity: 1
+Maximun capacity: 3
+-> Scaling policy: target tracking policy and choose the avarage CPU utilization (the requirement was 50%):50 -> Instances need (to warm up):100 seconds -> uncheck the disable scale in to create only a scale-out policy -> uncheck enable scale-in -> next -> next -> add tags -> create auto scaling group
+
+3. Create a target group for the instances:
+
+The target group was already created in the autoscaling configuration:
+<img src="images/img25.png" width="70%" alt="Target group">
+
+4. Create a load balance application for the instances:
+
+The load balancer was already created in the autoscaling configuration:
+<img src="images/img26.png" width="70%" alt="Load balancer">
+
+also check the litiner tab, it should show HTTP=80, I can also add more rules.
+
+Get inside the EC2 instance use the SSH key -> curl localhost:80 -> send a request to the load balancer: curl DNS of the load balancer (load balance is not reaching the webserver if you get a bad request)
+
+<!-- 1:15 -->
+
 ## Deploy a simple static page using S3:
 
 1. Create a cloudFront
